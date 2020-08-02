@@ -47,16 +47,34 @@ public class Car_repairs {
     {
         double somme=0;
         String message ="";
-        int i;
+        int i, compteur=0;
+
         for(i=0; i<list_service_consome.size(); i++)
         {
             if(this.list_service.contains(list_service_consome.get(i)))
             {
                 Services s = list_service_consome.get(i);
+                if(s.getName()=="Basic Inspection")
+                {
+                    
+                    compteur++;
+
+                }
+                
                 somme = somme + s.getPrice();
                 message = message+", "+s.getMessage();
+
             }
         }
-        System.out.println(customer_name+" pay "+somme+"$ "+message);
+        if(compteur == 0)
+        {
+            somme = somme+50;
+            message +=", is interested in Basic Inspection";
+            System.out.println(customer_name+" pay "+somme+"$ "+message);
+        }
+        else
+        {
+            System.out.println(customer_name+" pay "+somme+"$ "+message);
+        }
     }  
 }
