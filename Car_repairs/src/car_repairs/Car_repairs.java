@@ -7,73 +7,56 @@ package car_repairs;
 
 import java.util.ArrayList;
 import java.util.List;
-import car_repairs.Inspection;
 /**
  *
  * @author VERON
  */
 public class Car_repairs {
 
-    private String client_name;
-    private List<Object> service = new ArrayList <Object>();
+    private List<Services> list_service = new ArrayList <Services>();
+
+    public List<Services> getList_service() {
+        return list_service;
+    }
     
-    public Car_repairs(String name)
+    public void add_service(Services s)
     {
-        this.client_name = name;
-
-    }
-
-    public Car_repairs(String name, List<Object> services)
-    {
-        this.client_name = name;
-        this.service.addAll(services);
-    }
-    
-    public String getName() {
-        return client_name;
-    }
-
-    public void setName(String name) {
-        this.client_name = name;
-    }
-    
-    public List<Object> getService() {
-        return service;
-    }
-
-    public void setService(List<Object> service) {
-        this.service = service;
-    }
-    
-    public void Montant_a_payer(){
-        int i;
-        double somme;
-        String message;
-        
-        if(!this.service.contains(Inspection.class) || this.service.isEmpty())
+        if(!this.list_service.contains(s))
         {
-            Inspection ins = new Inspection();
-            somme = ins.getCost();
-            message = "is interested in Basic Inspection";
+           this.list_service.add(s); 
         }
         else
-        {  
-            somme = 0;
-            message = ""; 
-        }
-        for(i = 0; i<this.service.size(); i++)
         {
-            if(this.service.get(i).getClass() != Inspection.class)
-            {
-                String service_attribute = this.service.get(i).toString();
-                String[] tab = service_attribute.split("-");
-                message = message +" "+tab[0];
-                somme = somme + Double.parseDouble(tab[1]);
-            }
+            System.out.println("Le services existe déjà");
         }
-        System.out.println(this.client_name+" will pay "+somme+"$ "+message);
     }
     
+    public void remove_service(Services s)
+    {
+        if(this.list_service.contains(s))
+        {
+            this.list_service.remove(s);
+        }
+        else
+        {
+            System.out.println("Le service n'existe pas dans la liste des services");
+        }
+    }
     
-    
+    public void montant_a_payer(String customer_name, List<Services> list_service_consome)
+    {
+        double somme=0;
+        String message ="";
+        int i;
+        for(i=0; i<list_service_consome.size(); i++)
+        {
+            if(this.list_service.contains(list_service_consome.get(i)))
+            {
+                Services s = list_service_consome.get(i);
+                somme = somme + s.getPrice();
+                message = message+", "+s.getMessage();
+            }
+        }
+        System.out.println(customer_name+" pay "+somme+"$ "+message);
+    }  
 }
