@@ -66,7 +66,7 @@ public class Car_repairs {
 
             }
         }
-        if(compteur == 0)
+        if(compteur == 0 || list_service_consome.isEmpty())
         {
             somme = somme+50;
             message +=", is interested in Basic Inspection";
